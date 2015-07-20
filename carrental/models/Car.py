@@ -5,6 +5,7 @@ class Car(models.Model):
     Represents a car that can be rented
     """
     car_id = models.AutoField(primary_key=True)
+    vendor = models.CharField(max_length=50)
     model = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
     year = YearField()
