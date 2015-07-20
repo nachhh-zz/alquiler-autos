@@ -10,7 +10,8 @@ class CarAdmin(admin.ModelAdmin):
     list_display = ('model', 'vendor', 'description', 'year', 'color', 'qty')
     search_fields = ['vendor', 'model', 'description', 'year']
     list_filter = ['year', 'vendor']    
-
+#TODO add a way to limit dates available in calendar taking into account
+# the already reserved ranges and the avail of a given car (??)
 admin.site.register(Car, CarAdmin)
 admin.site.register(CarReservation)
 

@@ -11,6 +11,8 @@ class Car(models.Model):
     year = YearField()
     color = models.CharField(max_length=20)
     qty = models.IntegerField(default=0)
+    avail = models.IntegerField(default=0)
+    #TODO validate 0<=avail<=qty
     def __str__(self):
             return self.model
 
