@@ -1,2 +1,3 @@
 from carrental.models.Car import Car
-__all__ = ['Car']
+from carrental.models.CarReservation import CarReservation
+__all__ = ['Car', 'CarReservation']
