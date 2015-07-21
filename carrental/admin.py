@@ -7,7 +7,7 @@ class ReservationInline(admin.StackedInline):
     extra = 1
 class CarAdmin(admin.ModelAdmin):
     inlines = [ReservationInline]
-    list_display = ('model', 'vendor', 'description', 'year', 'color', 'qty')
+    list_display = ('model', 'vendor', 'description', 'year', 'color', 'qty', 'avail')
     search_fields = ['vendor', 'model', 'description', 'year']
     list_filter = ['year', 'vendor']    
 #TODO add a way to limit dates available in calendar taking into account

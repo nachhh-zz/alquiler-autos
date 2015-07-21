@@ -7,7 +7,7 @@ from .serializers import CarSerializer, CarReservationSerializer
 from django.utils import timezone
 import datetime
 from carrental.services.carRentalService import CarRentalService
-
+from django.core.exceptions import ObjectDoesNotExist
 @api_view(['GET'])
 def available_cars(request, start=timezone.now(), end=timezone.now() + datetime.timedelta(days=365)):
     """
@@ -27,3 +27,20 @@ def reserved_cars(request, start=timezone.now(), end=timezone.now() + datetime.t
     reservations = service.getReservedCars(start=start, end=end)
     serializer = CarReservationSerializer(reservations, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def rent_car(request, car_id, start=timezone.now(), end=timezone.now() + datetime.timedelta(days=1)):
+    """
+    Make a reservation of a car by id (by default rent for 1 day)
+    """
+    service = CarRentalService()
+    try:
+        carReservation = service.makeReservation(car_id=car_id, start=start, end=end)
+        print(carReservation)
+        if carReservation is None:
+            return Response({'The car requested is unavailable'})
+        serializer = CarReservationSerializer(carReservation, many=False)
+        return Response(serializer.data)
+    except ObjectDoesNotExist:
+        return Response({'The car requested does not exist'})
+
