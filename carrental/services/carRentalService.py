@@ -5,14 +5,26 @@ import datetime
 """ service utils for rental of cars
 """
 class CarRentalService:
-    """ get available cars in given range of dates
+    """ get available cars in giiven range of dates
     """
-    def getAvailCars(self, start, end):
-       # first get all cars
-       all_cars = Car.objects.all()
-       # now get rented cars in given range
-       rented_car_reservations = CarReservation.objects.filter(start_date__lte=start, end_date__gte=end)
-       # extract the actual cars from the reservation list above for which vail=0
+    def getAvailCars(self, car_id, start, end):
+       if(car_id is None):
+           if(start is None or end is None):
+                #just check if avail > 0
+                return Car.objects.filter(avail__gt=0)
+           # first get all cars
+           all_cars = Car.objects.all()
+           # now get rented cars in given range
+           rented_car_reservations = CarReservation.objects.filter(start_date__lte=start, end_date__gte=end)
+       else:
+            if(start is None or end is None):
+                #just check if avail > 0
+                return Car.objects.filter(pk=car_id,avail__gt=0)
+            # first get all cars with pk=car_id
+            all_cars = Car.objects.filter(pk=car_id)
+            # now get rented cars in given range
+            rented_car_reservations = CarReservation.objects.filter(car__car_id=car_id).filter( Q( start_date__range=[start, end] ) | Q( end_date__range=[start, end]) )
+       # extract the actual cars from the reservation list above for which avail=0
        rented_cars_not_avail = set([reservation.car for reservation in rented_car_reservations if reservation.car.avail==0])
        # finally get available cars by difference
        avail_cars = [car for car in all_cars if car not in rented_cars_not_avail]

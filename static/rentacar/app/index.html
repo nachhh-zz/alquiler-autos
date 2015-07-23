@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="RentaCarApp">
+<head>
+  <meta charset="utf-8">
+  <title>Rent A Car</title>
+  
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/moment/moment.js"></script>
+  <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <script src="bower_components/angular-daterangepicker/js/angular-daterangepicker.js"></script>
+  <script src="js/controllers.js"></script>
+
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+  <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
+
+</head>
+<body>               
+    <h1>Rent a Car!</h1>
+    <section ng-controller="TabController">
+        <ul>
+            <li ng-class="{ active:isSelected(1) }"> 
+                <a href ng-click="selectTab(1)">Rent a Car</a>    
+            </li>
+            <li ng-class="{ active:isSelected(2)  }"> 
+                <a href ng-click="selectTab(2)">Check car availability</a> 
+            </li>
+            <li ng-class="{active:isSelected(3)}"> 
+                <a href ng-click="selectTab(3)">See all available cars</a> 
+            </li>
+            <br><br>
+            <div ng-show="isSelected(1)" ng-controller="RentaCarController">
+                <form>
+                    <p>Select a model: 
+                    <select ng-model="form.carId">
+                        <option ng-repeat="car in cars" value="{{car.car_id}}">{{car.model}}</option>
+                    </select>
+                    </p>
+                    <p>Select a range of dates:
+                    <input date-range-picker class="form-control date-picker" type="text" ng-model="date" />
+         
+                    </p> 
+                    <button ng-click="form.submitForm()">Rent it!</button>
+                </form> 
+                 <p ng-show="formOK">Reservation success!!</p> 
+            </div>
+            
+            <div ng-show="isSelected(2)" ng-controller="CheckCarAvailController">
+                <form>
+                    <p>Select a model: 
+                    <select ng-model="form.carId">
+                        <option value="null">Any</option>
+                        <option ng-repeat="car in cars" value="{{car.car_id}}">{{car.model}}</option>
+                    </select>
+                    </p>
+                    <p>Select a range of dates:
+                    <input date-range-picker class="form-control date-picker" type="text" ng-model="date" />
+         
+                    </p> 
+                    <button ng-click="form.submitForm()">Submit form</button>
+                </form>    
+                <div ng-show="formOK" class="CSSTableGenerator" >
+                    <table>
+                        <tr><td ng-repeat="(k,v) in availCars[0]"> {{k}} </td></tr>
+                        <tr ng-repeat="car in availCars">
+                            <td ng-repeat="(k,v) in car">{{v}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div ng-show="isSelected(3)" class="CSSTableGenerator" >
+            <table ng-controller="CarAvailController"> 
+                <tr><td ng-repeat="(k,v) in cars[0]"> {{k}} </td></tr>
+                <tr ng-repeat="car in cars">
+                    <td ng-repeat="(k,v) in car">{{v}}</td>
+                </tr>
+            </table>
+            </div>
+        </ul>       
+    </section>      
+</body>
+</html>

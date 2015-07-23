@@ -9,12 +9,14 @@ import datetime
 from carrental.services.carRentalService import CarRentalService
 from django.core.exceptions import ObjectDoesNotExist
 @api_view(['GET'])
-def available_cars(request, start=timezone.now(), end=timezone.now() + datetime.timedelta(days=365)):
+def available_cars(request, car_id=None, start=None, end=None):
     """
-    List all cars or available cars in given range (by default show available cars in the year)
+    List all cars or available cars in given range or cars for which avail > 0
+    (that is, models for whhich there are available car instances)
+
     """
     service = CarRentalService()
-    cars = service.getAvailCars(start=start, end=end)
+    cars = service.getAvailCars(car_id=car_id, start=start, end=end)
     serializer = CarSerializer(cars, many=True)
     return Response(serializer.data)
   

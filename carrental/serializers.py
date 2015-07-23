@@ -5,7 +5,7 @@ from models.CarReservation import CarReservation
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
-        fields = ('model', 'year', 'color', 'qty', 'avail')
+        fields = ('car_id', 'model', 'year', 'color', 'qty', 'avail')
 
 class CarReservationSerializer(serializers.ModelSerializer):
     car = CarSerializer()
