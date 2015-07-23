@@ -15,7 +15,7 @@ class CarRentalService:
            # first get all cars
            all_cars = Car.objects.all()
            # now get rented cars in given range
-           rented_car_reservations = CarReservation.objects.filter(start_date__lte=start, end_date__gte=end)
+           rented_car_reservations = CarReservation.objects.filter( Q( start_date__range=[start, end] ) | Q( end_date__range=[start, end]) )
        else:
             if(start is None or end is None):
                 #just check if avail > 0
