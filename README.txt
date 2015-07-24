@@ -40,7 +40,7 @@ $ cd/static/rentacar
 $ npm install
 $ npm install bower
 $ bower install
-$ bower install angular-daterangepicker --save (TODO agregar esto a bower.json =) )
+$ bower install angular-daterangepicker --save #(TODO agregar esto a bower.json =) )
  
 Eso instala todas las dependencias necesarias para el cliente JS
 
