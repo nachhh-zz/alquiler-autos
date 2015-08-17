@@ -1,9 +1,11 @@
-from django.db import models
-from Car import Car
-from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.db import models
+from django.utils import timezone
 
-#validate dates range
+from Car import Car
+
+
+# validate dates range
 def validate_dates_range(value):
     if value < timezone.now():
         raise ValidationError('%s is not a valid date!' % value)

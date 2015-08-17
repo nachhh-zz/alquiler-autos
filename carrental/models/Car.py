@@ -1,5 +1,7 @@
 from django.db import models
 from djangoyearlessdate.models import YearField
+
+
 class Car(models.Model):
     """
     Represents a car that can be rented

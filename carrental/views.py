@@ -1,13 +1,14 @@
-from django.shortcuts import render
-from django.http import HttpResponse, Http404
-from django.template import RequestContext, loader
+import datetime
+
+from django.core.exceptions import ObjectDoesNotExist
+from django.utils import timezone
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
 from .serializers import CarSerializer, CarReservationSerializer
-from django.utils import timezone
-import datetime
 from carrental.services.carRentalService import CarRentalService
-from django.core.exceptions import ObjectDoesNotExist
+
+
 @api_view(['GET'])
 def available_cars(request, car_id=None, start=None, end=None):
     """

@@ -1,12 +1,11 @@
+"""Service utils for rental of cars.
+"""
+import datetime
+
+from django.db.models import Q
+
 from carrental.models.Car import Car
 from carrental.models.CarReservation import CarReservation
-from django.db.models import Q
-import datetime
-""" service utils for rental of cars
-"""
-class CarRentalService:
-    """ get available cars in giiven range of dates
-    """
     def getAvailCars(self, car_id, start, end):
        if(car_id is None):
            if(start is None or end is None):
